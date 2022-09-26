@@ -4,8 +4,7 @@ import Navigation from "./Navigation";
 
 const AddUser = () => {
   const getUserList = (event) => {
-    event.preventDefault();
-
+    // event.preventDefault();
     const target = event.target.elements;
     const user = { username: target.username.value };
     console.log("user:", user);
@@ -23,11 +22,10 @@ const AddUser = () => {
       <Navigation />
       <form
         onSubmit={(event) => getUserList(event)}
-        // action="/users"
-        // method="POST"
+        action="/users"
         className="d-flex justify-content-center pt-5"
       >
-        <input type="text" name="usename" id="username" />
+        <input type="text" name="username" />
         <button type="submit" className="mx-2">
           add user
         </button>
