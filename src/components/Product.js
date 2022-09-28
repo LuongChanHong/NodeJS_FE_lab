@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 
 import Navigation from "./Navigation";
+import AddToCart from "./AddToCart";
 
 import "../css/main.css";
 import "../css/product.css";
 
 const renderProductItem = (product) => (
-  <article key={product.title} className="card product-item">
+  <article key={product.id} className="card product-item">
     <header className="card__header">
       <h1 className="product__title">{product.title}</h1>
     </header>
@@ -20,9 +21,7 @@ const renderProductItem = (product) => (
       <h2 className="product__price">{product.price}</h2>
       <p className="product__description">{product.description}</p>
     </div>
-    <div className="card__actions">
-      <button className="btn">Add to Cart</button>
-    </div>
+    <AddToCart product={product} />
   </article>
 );
 
