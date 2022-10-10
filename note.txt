@@ -1,6 +1,5 @@
 Nội dung app:
-- cải thiện UI
-- đọc/ thêm object data vào file json trên server
+- cài đặt mysql2, lấy dữ liệu từ mysql server
 
 
 
