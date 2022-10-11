@@ -1,16 +1,14 @@
 import React from "react";
 
 const onSubmit = (event, product) => {
-  event.preventDefault();
-  // console.log("product:", product);
-  fetch("http://localhost:5000/delete-cart-item", {
+  console.log("product.id:", product.id);
+  fetch("http://localhost:5000/delete-product", {
     method: "POST",
-    body: parseInt(product.id),
-    headers: { "Content-Type": "application/json" },
-    credentials: "same-origin",
-  }) // Trả về response sau khi xử lí ở server để tránh lỗi fetch ở UI
-    .then((response) => console.log("response:", response))
-    .catch((error) => console.log("error:", error));
+    body: 1,
+    // headers: { "Content-Type": "application/json" },
+    // credentials: "same-origin",
+  });
+  event.preventDefault();
 };
 
 const DeleteButton = (props) => {
