@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
-import Navigation from "./Navigation";
-import AddToCart from "./AddToCart";
+import Navigation from "../components/Navigation";
+import AddToCart from "../components/AddToCart";
 
 import "../css/main.css";
 import "../css/product.css";
@@ -38,7 +38,7 @@ const renderProductList = (productList) => {
   }
 };
 
-const Product = () => {
+const Shop = () => {
   const [productList, setProductList] = useState([]);
   useEffect(() => {
     const getProductList = async () => {
@@ -65,4 +65,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Shop;

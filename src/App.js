@@ -2,7 +2,7 @@
 
 import { BrowserRouter } from "react-router-dom";
 
-import Main from "./components/Main";
+import Main from "./views/Main";
 
 function App() {
   return (

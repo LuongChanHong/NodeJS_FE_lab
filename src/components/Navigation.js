@@ -8,10 +8,22 @@ const Navigation = () => {
       <nav className="main-header__nav">
         <ul className="main-header__item-list">
           <li className="main-header__item">
-            <a href="/product">Product</a>
+            <a href="/shop">Shop</a>
+          </li>
+          <li className="main-header__item">
+            <a href="/products">Products</a>
+          </li>
+          <li className="main-header__item">
+            <a href="/cart">Cart</a>
+          </li>
+          <li className="main-header__item">
+            <a href="/">Orders</a>
           </li>
           <li className="main-header__item">
             <a href="/add-product">Add Product</a>
+          </li>
+          <li className="main-header__item">
+            <a href="/admin-products">Admin Product</a>
           </li>
         </ul>
       </nav>

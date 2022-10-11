@@ -1,5 +1,5 @@
 Nội dung app:
-- cài đặt mysql2, lấy dữ liệu từ mysql server
+- update and add views
 
 
 

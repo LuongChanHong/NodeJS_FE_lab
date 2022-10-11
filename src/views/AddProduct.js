@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import Navigation from "./Navigation";
+import Navigation from "../components/Navigation";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({
     title: "",
     description: "",
     price: "",
+    imageUrl: "",
   });
 
   const onChange = (event) => {
@@ -48,6 +49,14 @@ const AddProduct = () => {
           <input
             type="text"
             name="price"
+            onChange={(event) => onChange(event)}
+          />
+        </div>
+        <div className="form-control">
+          <label htmlFor="imageUrl">ImageUrl</label>
+          <input
+            type="text"
+            name="imageUrl"
             onChange={(event) => onChange(event)}
           />
         </div>
