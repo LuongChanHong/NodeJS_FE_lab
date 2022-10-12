@@ -1,5 +1,6 @@
 Nội dung app:
-- update and add views
+- tạo model Product bằng sequelize
+- thêm product vào database
 
 
 
