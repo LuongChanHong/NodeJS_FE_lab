@@ -19,7 +19,7 @@ const renderProductItem = (product) => (
       />
     </div>
     <div className="card__content">
-      <h2 className="product__price">{product.price}</h2>
+      <h2 className="product__price">{product.price} $</h2>
       <p className="product__description">{product.description}</p>
     </div>
     <div className="d-flex justify-content-center">
