@@ -3,6 +3,7 @@ import Navigation from "../components/Navigation";
 
 const AddProduct = () => {
   const isEditPage = window.location.href.search("edit");
+  const negative = -1;
   const productID = window.location.href[window.location.href.length - 1];
   const [product, setProduct] = useState({
     title: "",
@@ -11,7 +12,7 @@ const AddProduct = () => {
     imageUrl: "",
   });
   useEffect(() => {
-    if (isEditPage) {
+    if (isEditPage != negative) {
       const getEditProduct = async () => {
         try {
           await fetch(`http://localhost:5000/get-edit-product?id=${productID}`)
@@ -36,7 +37,7 @@ const AddProduct = () => {
   const onSubmit = (event) => {
     // event.preventDefault();
     console.log("product:", product);
-    const url = isEditPage ? "/post-edit-product" : "/add-product";
+    const url = isEditPage != negative ? "/post-edit-product" : "/add-product";
     fetch("http://localhost:5000" + url, {
       method: "POST",
       body: JSON.stringify(product),
@@ -92,7 +93,7 @@ const AddProduct = () => {
           />
         </div>
         <div>
-          {isEditPage ? (
+          {isEditPage != negative ? (
             <button className="btn btn-success" type="submit">
               Edit Product
             </button>
