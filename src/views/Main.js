@@ -9,7 +9,6 @@ import AddProduct from "./AddProduct";
 import Products from "./Products";
 import ProductDetail from "./ProductDetail";
 import AdminProducts from "./AdminProducts";
-import EditProduct from "./EditProduct";
 import Shop from "./Shop";
 import Cart from "./Cart";
 
@@ -22,7 +21,7 @@ const Main = () => {
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/admin-products" element={<AdminProducts />} />
         <Route exact path="/products/:productID" element={<ProductDetail />} />
-        <Route exact path="/edit/:productID" element={<EditProduct />} />
+        <Route exact path="/edit/:productID" element={<AddProduct />} />
         <Route exact path="/add-product" element={<AddProduct />} />
         <Route path="*" element={<Shop />} />
       </Routes>

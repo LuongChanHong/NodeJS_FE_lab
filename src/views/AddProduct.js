@@ -1,13 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navigation from "../components/Navigation";
 
 const AddProduct = () => {
+  const isEditPage = window.location.href.search("edit");
+  const productID = window.location.href[window.location.href.length - 1];
   const [product, setProduct] = useState({
     title: "",
     description: "",
     price: "",
     imageUrl: "",
   });
+  useEffect(() => {
+    if (isEditPage) {
+      const getEditProduct = async () => {
+        try {
+          await fetch(`http://localhost:5000/get-edit-product?id=${productID}`)
+            .then((response) => response.json())
+            .then((data) => {
+              setProduct(data);
+            });
+        } catch (err) {
+          console.log("err:", err);
+        }
+      };
+      getEditProduct();
+    }
+  }, []);
 
   const onChange = (event) => {
     let target = event.target.name;
@@ -18,7 +36,8 @@ const AddProduct = () => {
   const onSubmit = (event) => {
     // event.preventDefault();
     console.log("product:", product);
-    fetch("http://localhost:5000/add-product", {
+    const url = isEditPage ? "/post-edit-product" : "/add-product";
+    fetch("http://localhost:5000" + url, {
       method: "POST",
       body: JSON.stringify(product),
       headers: { "Content-Type": "application/json" },
@@ -34,13 +53,14 @@ const AddProduct = () => {
       <form
         onSubmit={(event) => onSubmit(event)}
         className="product-form"
-        action="/product"
+        action="/products"
       >
         <div className="form-control">
           <label htmlFor="title">Title</label>
           <input
             type="text"
             name="title"
+            value={product.title}
             onChange={(event) => onChange(event)}
           />
         </div>
@@ -49,6 +69,7 @@ const AddProduct = () => {
           <input
             type="text"
             name="price"
+            value={product.price}
             onChange={(event) => onChange(event)}
           />
         </div>
@@ -57,6 +78,7 @@ const AddProduct = () => {
           <input
             type="text"
             name="imageUrl"
+            value={product.imageUrl}
             onChange={(event) => onChange(event)}
           />
         </div>
@@ -65,12 +87,21 @@ const AddProduct = () => {
           <input
             type="text"
             name="description"
+            value={product.description}
             onChange={(event) => onChange(event)}
           />
         </div>
-        <button className="btn btn-success" type="submit">
-          Add Product
-        </button>
+        <div>
+          {isEditPage ? (
+            <button className="btn btn-success" type="submit">
+              Edit Product
+            </button>
+          ) : (
+            <button className="btn btn-success" type="submit">
+              Add Product
+            </button>
+          )}
+        </div>
       </form>
     </section>
   );
