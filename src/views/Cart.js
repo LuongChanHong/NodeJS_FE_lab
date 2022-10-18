@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Navigation from "../components/Navigation";
 import DeleteButton from "../components/DeleteButton";
+import AddOrder from "../components/AddOrder";
 
 import "../css/main.css";
 import "../css/product.css";
@@ -10,7 +11,7 @@ const renderProductItem = (product) => (
   <article key={product.id} className="card product-item">
     <header className="card__header">
       <h1 className="product__title">
-        {product.title} ({product.quantity})
+        {product.title} ({product.cartItem.quantity})
       </h1>
     </header>
     <div className="card__image">
@@ -20,7 +21,7 @@ const renderProductItem = (product) => (
       <h2 className="product__price">{product.price} $</h2>
       <p className="product__description">{product.description}</p>
     </div>
-    <DeleteButton product={product} />
+    <DeleteButton isCartItem={true} product={product} />
   </article>
 );
 
@@ -60,6 +61,7 @@ const Cart = () => {
     <section>
       <Navigation />
       {renderProductList(productList)}
+      {productList.length > 0 ? <AddOrder /> : <></>}
     </section>
   );
 };

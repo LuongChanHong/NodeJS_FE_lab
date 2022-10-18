@@ -21,7 +21,7 @@ const renderProductItem = (product) => (
     </div>
     <div className="d-flex justify-content-center">
       <EditButton product={product} />
-      <DeleteButton product={product} />
+      <DeleteButton isProductItem={true} product={product} />
     </div>
   </article>
 );

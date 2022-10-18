@@ -11,6 +11,7 @@ import ProductDetail from "./ProductDetail";
 import AdminProducts from "./AdminProducts";
 import Shop from "./Shop";
 import Cart from "./Cart";
+import Order from "./Order";
 
 const Main = () => {
   return (
@@ -19,10 +20,13 @@ const Main = () => {
         <Route exact path="/products" element={<Products />} />
         <Route exact path="/shop" element={<Shop />} />
         <Route exact path="/cart" element={<Cart />} />
+
         <Route exact path="/admin-products" element={<AdminProducts />} />
         <Route exact path="/products/:productID" element={<ProductDetail />} />
         <Route exact path="/edit/:productID" element={<AddProduct />} />
+
         <Route exact path="/add-product" element={<AddProduct />} />
+        <Route exact path="/order" element={<Order />} />
         <Route path="*" element={<Shop />} />
       </Routes>
     </section>

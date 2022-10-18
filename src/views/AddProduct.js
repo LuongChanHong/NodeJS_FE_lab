@@ -44,7 +44,10 @@ const AddProduct = () => {
       headers: { "Content-Type": "application/json" },
       credentials: "same-origin",
     })
-      .then((response) => response.json())
+      .then((response) => {
+        response.json();
+        console.log("product:", product);
+      })
       .then((data) => console.log("data:", data));
   };
 

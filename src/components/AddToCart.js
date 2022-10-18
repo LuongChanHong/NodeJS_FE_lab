@@ -1,7 +1,7 @@
 import React from "react";
 
 const onSubmit = (event, product) => {
-  event.preventDefault();
+  // event.preventDefault();
   // console.log("product:", product);
   fetch("http://localhost:5000/add-to-cart", {
     method: "POST",
@@ -18,7 +18,7 @@ const onSubmit = (event, product) => {
 const AddToCart = (props) => {
   return (
     <div className="card__actions">
-      <form onSubmit={(event) => onSubmit(event, props.product)}>
+      <form action="/cart" onSubmit={(event) => onSubmit(event, props.product)}>
         <button className="btn" type="submit">
           Add to Cart
         </button>

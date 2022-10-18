@@ -17,7 +17,7 @@ const Navigation = () => {
             <a href="/cart">Cart</a>
           </li>
           <li className="main-header__item">
-            <a href="/">Orders</a>
+            <a href="/order">Orders</a>
           </li>
           <li className="main-header__item">
             <a href="/add-product">Add Product</a>

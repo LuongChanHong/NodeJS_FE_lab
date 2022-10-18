@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const onSubmit = (event, product) => {
+const onSubmit = (event, product, itemType) => {
   // console.log("product.id:", product.id);
-  fetch("http://localhost:5000/post-delete-product", {
+  const url =
+    itemType === "cart" ? "/delete-cart-item" : "/post-delete-product";
+  console.log("itemType:", itemType);
+  fetch("http://localhost:5000" + url, {
     method: "POST",
     body: JSON.stringify({ id: product.id }),
     headers: { "Content-Type": "application/json" },
@@ -12,11 +15,21 @@ const onSubmit = (event, product) => {
 };
 
 const DeleteButton = (props) => {
+  const [itemType, setItemType] = useState();
+
+  useEffect(() => {
+    if (props.isCartItem) {
+      setItemType("cart");
+    } else {
+      setItemType("product");
+    }
+  }, [itemType]);
+
   return (
     <div className="card__actions">
       <form
         action="/products"
-        onSubmit={(event) => onSubmit(event, props.product)}
+        onSubmit={(event) => onSubmit(event, props.product, itemType)}
       >
         <button className="btn" type="submit">
           Delete
