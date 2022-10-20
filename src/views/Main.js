@@ -22,7 +22,7 @@ const Main = () => {
         <Route exact path="/cart" element={<Cart />} />
 
         <Route exact path="/admin-products" element={<AdminProducts />} />
-        <Route exact path="/products/:productID" element={<ProductDetail />} />
+        <Route path="/products/:productID" element={<ProductDetail />} />
         <Route exact path="/edit/:productID" element={<AddProduct />} />
 
         <Route exact path="/add-product" element={<AddProduct />} />

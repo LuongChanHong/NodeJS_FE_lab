@@ -1,6 +1,6 @@
 Nội dung app:
-- thêm cart, order model
-- thêm cart, order item vào database
+- chỉnh sửa Product model dùng mongoDB
+- hiện danh sách product dùng mongoDB
 
 
 

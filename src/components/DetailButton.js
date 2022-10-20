@@ -1,10 +1,9 @@
 import React from "react";
-import { redirect } from "react-router-dom";
 
 const onSubmit = (event, product) => {
   event.preventDefault();
-  console.log("product:", product);
-  window.location.href = `/products/${product.id}`;
+  // console.log("product:", product);
+  window.location.href = `/products/detail?_id=${product._id}`;
   //   fetch("http://localhost:5000/delete-cart-item", {
   //     method: "POST",
   //     body: parseInt(product.id),

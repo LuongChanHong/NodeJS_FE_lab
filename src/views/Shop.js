@@ -7,7 +7,7 @@ import "../css/main.css";
 import "../css/product.css";
 
 const renderProductItem = (product) => (
-  <article key={product.id} className="card product-item">
+  <article key={product._id} className="card product-item">
     <header className="card__header">
       <h1 className="product__title">{product.title}</h1>
     </header>
@@ -40,7 +40,7 @@ const Shop = () => {
   useEffect(() => {
     const getProductList = async () => {
       try {
-        fetch("http://localhost:5000/get-product")
+        fetch("http://localhost:5000/get-products")
           .then((response) => response.json())
           .then((data) => {
             setProductList(data);
