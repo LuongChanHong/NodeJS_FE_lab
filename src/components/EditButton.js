@@ -4,7 +4,7 @@ import { redirect } from "react-router-dom";
 const onSubmit = (event, product) => {
   event.preventDefault();
   console.log("product:", product);
-  window.location.href = `/edit/${product.id}`;
+  window.location.href = `/edit/edit?_id=${product._id}`;
 };
 
 const EditButton = (props) => {

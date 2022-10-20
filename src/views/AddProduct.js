@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+
 import Navigation from "../components/Navigation";
 
 const AddProduct = () => {
-  const isEditPage = window.location.href.search("edit");
-  const negative = -1;
-  const productID = window.location.href[window.location.href.length - 1];
+  const [productID, setProductID] = useSearchParams();
   const [product, setProduct] = useState({
     title: "",
     description: "",
     price: "",
     imageUrl: "",
   });
+  const isEditPage = window.location.href.search("edit");
+  const negative = -1;
+  const id = productID.get("_id");
+
   useEffect(() => {
     if (isEditPage != negative) {
-      const getEditProduct = async () => {
+      const getEditProduct = () => {
         try {
-          await fetch(`http://localhost:5000/get-edit-product?id=${productID}`)
+          fetch(`http://localhost:5000/get-product?id=${id}`)
             .then((response) => response.json())
             .then((data) => {
               setProduct(data);
+              // console.log("data:", data);
             });
         } catch (err) {
           console.log("err:", err);

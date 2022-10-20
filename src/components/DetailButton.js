@@ -4,14 +4,6 @@ const onSubmit = (event, product) => {
   event.preventDefault();
   // console.log("product:", product);
   window.location.href = `/products/detail?_id=${product._id}`;
-  //   fetch("http://localhost:5000/delete-cart-item", {
-  //     method: "POST",
-  //     body: parseInt(product.id),
-  //     headers: { "Content-Type": "application/json" },
-  //     credentials: "same-origin",
-  //   }) // Trả về response sau khi xử lí ở server để tránh lỗi fetch ở UI
-  //     .then((response) => console.log("response:", response))
-  //     .catch((error) => console.log("error:", error));
 };
 
 const DetailButton = (props) => {
