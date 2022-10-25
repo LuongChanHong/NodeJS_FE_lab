@@ -42,7 +42,7 @@ const renderProductList = (productList) => {
 const Products = () => {
   const [productList, setProductList] = useState([]);
   useEffect(() => {
-    const getProductList = async () => {
+    const getProductList = () => {
       try {
         fetch("http://localhost:5000/get-products")
           .then((response) => response.json())

@@ -1,6 +1,6 @@
 Nội dung app:
-- update product dùng mongoDB
-"update product using mongoDB"
+- thêm item vào cart dùng mongoDB
+"add item to cart using mongoDB"
 
 
 

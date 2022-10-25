@@ -7,11 +7,11 @@ import AddOrder from "../components/AddOrder";
 import "../css/main.css";
 import "../css/product.css";
 
-const renderProductItem = (product) => (
-  <article key={product.id} className="card product-item">
+const renderCartItem = (product) => (
+  <article key={product._id} className="card product-item">
     <header className="card__header">
       <h1 className="product__title">
-        {product.title} ({product.cartItem.quantity})
+        {product.title} ({product.quantity})
       </h1>
     </header>
     <div className="card__image">
@@ -25,12 +25,12 @@ const renderProductItem = (product) => (
   </article>
 );
 
-const renderProductList = (productList) => {
+const renderCartList = (productList) => {
   const countProduct = productList.length;
   if (countProduct > 0) {
     return (
       <section className="grid">
-        {productList.map((product) => renderProductItem(product))}
+        {productList.map((product) => renderCartItem(product))}
       </section>
     );
   } else {
@@ -39,29 +39,27 @@ const renderProductList = (productList) => {
 };
 
 const Cart = () => {
-  const [productList, setProductList] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   useEffect(() => {
-    const getProductList = async () => {
+    const getcartItems = async () => {
       try {
         fetch("http://localhost:5000/get-cart")
           .then((response) => response.json())
           .then((data) => {
-            setProductList(data);
-            // console.log("ProductList:", ProductList);
-            // console.log(data);
+            setCartItems(data);
           });
       } catch (error) {
         console.log(error);
       }
     };
-    getProductList();
+    getcartItems();
   }, []);
 
   return (
     <section>
       <Navigation />
-      {renderProductList(productList)}
-      {productList.length > 0 ? <AddOrder /> : <></>}
+      {renderCartList(cartItems)}
+      {cartItems.length > 0 ? <AddOrder /> : <></>}
     </section>
   );
 };
