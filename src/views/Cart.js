@@ -8,18 +8,18 @@ import "../css/main.css";
 import "../css/product.css";
 
 const renderCartItem = (product) => (
-  <article key={product.productId._id} className="card product-item">
+  <article key={product.product._id} className="card product-item">
     <header className="card__header">
       <h1 className="product__title">
-        {product.productId.title} ({product.quantity})
+        {product.product.title} ({product.quantity})
       </h1>
     </header>
     <div className="card__image">
-      <img src={product.productId.imageUrl} alt="A Book" />
+      <img src={product.product.imageUrl} alt="A Book" />
     </div>
     <div className="card__content">
-      <h2 className="product__price">{product.productId.price} $</h2>
-      <p className="product__description">{product.productId.description}</p>
+      <h2 className="product__price">{product.product.price} $</h2>
+      <p className="product__description">{product.product.description}</p>
     </div>
     <DeleteButton isCartItem={true} product={product} />
   </article>
@@ -47,6 +47,7 @@ const Cart = () => {
           .then((response) => response.json())
           .then((data) => {
             setCartItems(data);
+            // console.log("data:", data);
           });
       } catch (error) {
         console.log(error);

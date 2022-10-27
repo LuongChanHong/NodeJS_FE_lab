@@ -6,21 +6,21 @@ import "../css/main.css";
 import "../css/product.css";
 const renderOrderItem = (order) => (
   <article
-    key={order.id}
+    key={order._id}
     className="d-flex flex-column shadow-lg p-3 m-2 bg-white rounded"
     style={{ width: "30rem" }}
   >
-    {order.map((order) => (
-      <div className="d-flex">
+    {order.products.map((product) => (
+      <div key={product.product._id} className="d-flex">
         <div className="d-flex justify-content-" style={{ width: "20rem" }}>
-          <h3>{order.title}</h3>
+          <h3>{product.product.title}</h3>
         </div>
         <div
           className="d-flex justify-content-between"
           style={{ width: "10rem" }}
         >
-          <h3 className="mx-1">({order.orderItem.quantity})</h3>
-          <h3 className="ms-4">{order.price} $</h3>
+          <h3 className="mx-1">({product.quantity})</h3>
+          <h3 className="ms-4">{product.product.price} $</h3>
         </div>
       </div>
     ))}
@@ -49,7 +49,7 @@ const Order = () => {
           .then((response) => response.json())
           .then((data) => {
             setOrderList(data);
-            console.log(data);
+            // console.log(data);
           });
       } catch (error) {
         console.log(error);
