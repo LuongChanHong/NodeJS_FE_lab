@@ -4,10 +4,9 @@ const onSubmit = (event, product, itemType) => {
   // console.log("product.id:", product.id);
   const url =
     itemType === "cart" ? "/delete-cart-item" : "/post-delete-product";
-  console.log("itemType:", itemType);
   fetch("http://localhost:5000" + url, {
     method: "POST",
-    body: JSON.stringify({ id: product.id }),
+    body: JSON.stringify(product),
     headers: { "Content-Type": "application/json" },
     credentials: "same-origin",
   });
@@ -16,14 +15,14 @@ const onSubmit = (event, product, itemType) => {
 
 const DeleteButton = (props) => {
   const [itemType, setItemType] = useState();
-
   useEffect(() => {
     if (props.isCartItem) {
       setItemType("cart");
-    } else {
+    }
+    if (props.isProductItem) {
       setItemType("product");
     }
-  }, [itemType]);
+  }, []);
 
   return (
     <div className="card__actions">
