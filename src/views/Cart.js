@@ -8,18 +8,18 @@ import "../css/main.css";
 import "../css/product.css";
 
 const renderCartItem = (product) => (
-  <article key={product._id} className="card product-item">
+  <article key={product.productId._id} className="card product-item">
     <header className="card__header">
       <h1 className="product__title">
-        {product.title} ({product.quantity})
+        {product.productId.title} ({product.quantity})
       </h1>
     </header>
     <div className="card__image">
-      <img src={product.imageUrl} alt="A Book" />
+      <img src={product.productId.imageUrl} alt="A Book" />
     </div>
     <div className="card__content">
-      <h2 className="product__price">{product.price} $</h2>
-      <p className="product__description">{product.description}</p>
+      <h2 className="product__price">{product.productId.price} $</h2>
+      <p className="product__description">{product.productId.description}</p>
     </div>
     <DeleteButton isCartItem={true} product={product} />
   </article>
