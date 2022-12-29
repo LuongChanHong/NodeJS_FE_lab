@@ -1,6 +1,6 @@
 Nội dung app:
-- hiển thị danh sách order sử dụng mongoose
-"render order list using mongoose"
+- commit trước khi set cookie từ FE
+"commit before set cookie in FE"
 
 
 
