@@ -39,13 +39,13 @@ const Login = () => {
       method: "POST",
       body: JSON.stringify(loginInfo),
       headers: { "Content-Type": "application/json" },
-      credentials: "same-origin",
-    });
-    //   .then((response) => {
-    //     return response.json();
-    //   })
-    //   .then((data) => console.log("data:", data))
-    //   .catch((err) => console.log(err));
+      credentials: "include",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => console.log("data:", data))
+      .catch((err) => console.log(err));
   };
 
   return (
