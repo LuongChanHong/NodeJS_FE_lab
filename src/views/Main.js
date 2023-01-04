@@ -13,6 +13,7 @@ import Shop from "./Shop";
 import Cart from "./Cart";
 import Order from "./Order";
 import Login from "./Login";
+import Signup from "./Signup";
 
 const Main = () => {
   return (
@@ -22,6 +23,7 @@ const Main = () => {
         <Route exact path="/shop" element={<Shop />} />
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/login" element={<Login />} />
+        <Route exact path="/signup" element={<Signup />} />
 
         <Route exact path="/admin-products" element={<AdminProducts />} />
         <Route exact path="/products/:productID" element={<ProductDetail />} />

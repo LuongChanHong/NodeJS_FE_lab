@@ -1,44 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import Navigation from "../components/Navigation";
 
-import { logInAction } from "../redux/actions/userAction";
-
-const Login = () => {
-  const [isLogin, setLogin] = useState(false);
-  const [loginInfo, setLoginInfo] = useState({
+const Signup = () => {
+  const [signupInfo, setSignupInfo] = useState({
     email: "",
     password: "",
+    confirm: "",
   });
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const onChange = (event) => {
     let target = event.target.name;
     let value = event.target.value;
-    setLoginInfo({ ...loginInfo, [target]: value });
-  };
-
-  const handleLogin = (isLogin) => {
-    setLogin(isLogin);
+    setSignupInfo({ ...signupInfo, [target]: value });
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
-    // console.log("loginInfo:", loginInfo);
-    try {
-      dispatch(logInAction(loginInfo, () => navigate("/products")));
-    } catch (error) {
-      console.log(error);
+    //   console.log(signupInfo);
+    if (signupInfo.password === signupInfo.confirm) {
+      fetch("http://localhost:5000/signup", {
+        method: "POST",
+        body: JSON.stringify({
+          email: signupInfo.email,
+          password: signupInfo.password,
+        }),
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      navigate("/login");
+    } else {
+      alert("Password and Password Confirm not match");
     }
   };
 
   return (
     <section>
-      <Navigation isLogin={isLogin} />
+      <Navigation isAuth={true} />
       <form
         onSubmit={(event) => onSubmit(event)}
         className="product-form"
@@ -49,20 +50,28 @@ const Login = () => {
           <input
             type="text"
             name="email"
-            value={loginInfo.email}
+            value={signupInfo.email}
             onChange={(event) => onChange(event)}
           />
         </div>
         <div className="form-control">
           <label htmlFor="password">Password</label>
           <input
-            type="passwrod"
+            type="password"
             name="password"
-            value={loginInfo.password}
+            value={signupInfo.password}
             onChange={(event) => onChange(event)}
           />
         </div>
-
+        <div className="form-control">
+          <label htmlFor="confirm">Confirm Password</label>
+          <input
+            type="password"
+            name="confirm"
+            value={signupInfo.confirm}
+            onChange={(event) => onChange(event)}
+          />
+        </div>
         <div>
           <button className="btn btn-success" type="submit">
             Login
@@ -73,4 +82,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
