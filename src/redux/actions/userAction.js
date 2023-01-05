@@ -6,7 +6,7 @@ export const logInAction = (loginInfo, callback) => {
   return async (dispatch) => {
     try {
       const result = await userService.logIn(loginInfo);
-      console.log(result);
+      // console.log(result);
       dispatch(createAction(USER_ACTION.LOGIN, result.data));
       callback();
     } catch (err) {
