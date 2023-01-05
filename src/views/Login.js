@@ -7,6 +7,7 @@ import Navigation from "../components/Navigation";
 import { logInAction } from "../redux/actions/userAction";
 
 const Login = () => {
+  const [errMess, setErrMess] = useState("");
   const [isLogin, setLogin] = useState(false);
   const [loginInfo, setLoginInfo] = useState({
     email: "",
@@ -30,7 +31,10 @@ const Login = () => {
     event.preventDefault();
     // console.log("loginInfo:", loginInfo);
     try {
-      dispatch(logInAction(loginInfo, () => navigate("/products")));
+      const err = dispatch(logInAction(loginInfo, () => navigate("/products")));
+      if (err) {
+        err.then((res) => setErrMess(res));
+      }
     } catch (error) {
       console.log(error);
     }
@@ -44,6 +48,7 @@ const Login = () => {
         className="product-form"
         action="/products"
       >
+        <h1 className="text-center text-danger mt-2">{errMess}</h1>
         <div className="form-control">
           <label htmlFor="email">Email</label>
           <input
@@ -51,6 +56,7 @@ const Login = () => {
             name="email"
             value={loginInfo.email}
             onChange={(event) => onChange(event)}
+            onBlur={() => setErrMess("")}
           />
         </div>
         <div className="form-control">
@@ -60,6 +66,7 @@ const Login = () => {
             name="password"
             value={loginInfo.password}
             onChange={(event) => onChange(event)}
+            onBlur={() => setErrMess("")}
           />
         </div>
 
