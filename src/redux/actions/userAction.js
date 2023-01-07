@@ -8,9 +8,10 @@ export const logInAction = (loginInfo, callback) => {
       const result = await userService.logIn(loginInfo);
       // console.log(result);
       dispatch(createAction(USER_ACTION.LOGIN, result.data));
-      callback();
+      // callback();
+      return result.data;
     } catch (err) {
-      return err.response.statusText;
+      return err.responce.statusMessage;
     }
   };
 };

@@ -9,6 +9,8 @@ const Signup = () => {
     password: "",
     confirm: "",
   });
+  const [openErrMessBox, setErrMessBox] = useState(false);
+  const [errMess, setErrMess] = useState([]);
 
   const navigate = useNavigate();
 
@@ -21,20 +23,18 @@ const Signup = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     //   console.log(signupInfo);
-    if (signupInfo.password === signupInfo.confirm) {
-      fetch("http://localhost:5000/signup", {
-        method: "POST",
-        body: JSON.stringify({
-          email: signupInfo.email,
-          password: signupInfo.password,
-        }),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
+    fetch("http://localhost:5000/signup", {
+      method: "POST",
+      body: JSON.stringify(signupInfo),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setErrMess(data.errors);
+        setErrMessBox(true);
       });
-      navigate("/login");
-    } else {
-      alert("Password and Password Confirm not match");
-    }
+    // navigate("/login");
   };
 
   return (
@@ -45,6 +45,15 @@ const Signup = () => {
         className="product-form"
         action="/products"
       >
+        {openErrMessBox && (
+          <div className="form-control border-danger">
+            {errMess.map((item, i) => (
+              <h6 key={i} className="text-danger">
+                {item.msg}
+              </h6>
+            ))}
+          </div>
+        )}
         <div className="form-control">
           <label htmlFor="email">Email</label>
           <input

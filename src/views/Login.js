@@ -29,11 +29,14 @@ const Login = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    // console.log("loginInfo:", loginInfo);
+
+    // , () => navigate("/products")
     try {
-      const err = dispatch(logInAction(loginInfo, () => navigate("/products")));
-      if (err) {
-        err.then((res) => setErrMess(res));
+      const res = dispatch(logInAction(loginInfo));
+      if (res) {
+        res.then((data) => {
+          setErrMess(data);
+        });
       }
     } catch (error) {
       console.log(error);
@@ -48,7 +51,15 @@ const Login = () => {
         className="product-form"
         action="/products"
       >
-        <h1 className="text-center text-danger mt-2">{errMess}</h1>
+        {errMess && (
+          <div className="form-control border-danger">
+            {errMess.map((item, i) => (
+              <h6 key={i} className="text-danger">
+                {item.msg}
+              </h6>
+            ))}
+          </div>
+        )}
         <div className="form-control">
           <label htmlFor="email">Email</label>
           <input
