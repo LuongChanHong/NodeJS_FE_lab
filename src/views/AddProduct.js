@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Navigation from "../components/Navigation";
+
+import { post } from "../utils/fetch";
 
 const AddProduct = () => {
   const [productID, setProductID] = useSearchParams();
@@ -11,9 +13,12 @@ const AddProduct = () => {
     price: "",
     imageUrl: "",
   });
+  const [errMess, setErrMess] = useState([]);
   const isEditPage = window.location.href.search("edit");
   const negative = -1;
   const id = productID.get("_id");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isEditPage != negative) {
@@ -40,20 +45,22 @@ const AddProduct = () => {
   };
 
   const onSubmit = (event) => {
-    // event.preventDefault();
-    console.log("product:", product);
+    event.preventDefault();
     const url = isEditPage != negative ? "/post-edit-product" : "/add-product";
-    fetch("http://localhost:5000" + url, {
-      method: "POST",
-      body: JSON.stringify(product),
-      headers: { "Content-Type": "application/json" },
-      credentials: "same-origin",
-    })
-      .then((response) => {
-        response.json();
-        console.log("product:", product);
-      })
-      .then((data) => console.log("data:", data));
+    try {
+      const response = post(url, product);
+      // console.log("response:", response);
+      response.then((res) => {
+        // console.log("res:", res);
+        if (res.data.length > 0) {
+          setErrMess(res.data);
+        } else {
+          navigate("/products");
+        }
+      });
+    } catch (error) {
+      console.log("error:", error);
+    }
   };
 
   return (
@@ -64,6 +71,15 @@ const AddProduct = () => {
         className="product-form"
         action="/products"
       >
+        {errMess.length > 0 && (
+          <div className="border border-danger rounded p-2 mt-3">
+            {errMess.map((item, i) => (
+              <h6 key={i} className="text-danger">
+                {item.msg}
+              </h6>
+            ))}
+          </div>
+        )}
         <div className="form-control">
           <label htmlFor="title">Title</label>
           <input
