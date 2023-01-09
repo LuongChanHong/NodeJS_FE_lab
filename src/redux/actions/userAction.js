@@ -2,13 +2,12 @@ import { userService } from "../../services/userServices";
 import { USER_ACTION } from "./types/userTypes";
 import { createAction } from ".";
 
-export const logInAction = (loginInfo, callback) => {
+export const logInAction = (loginInfo) => {
   return async (dispatch) => {
     try {
       const result = await userService.logIn(loginInfo);
       // console.log(result);
       dispatch(createAction(USER_ACTION.LOGIN, result.data));
-      // callback();
       return result.data;
     } catch (err) {
       return err.responce.statusMessage;
@@ -27,14 +26,14 @@ export const logOutAction = (callback) => {
   };
 };
 
-export const signUpAction = (loginInfo, callback) => {
+export const signUpAction = (signupInfo) => {
   return async (dispatch) => {
     try {
-      const result = await userService.signUp(loginInfo);
-      dispatch(createAction(USER_ACTION.SIGN_UP));
-      callback();
+      const result = await userService.signUp(signupInfo);
+      // dispatch(createAction(USER_ACTION.SIGN_UP));
+      return result.data;
     } catch (err) {
-      console.log("err:", err);
+      return err.responce;
     }
   };
 };

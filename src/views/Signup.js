@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import Navigation from "../components/Navigation";
+
+import { signUpAction } from "../redux/actions/userAction";
 
 const Signup = () => {
   const [signupInfo, setSignupInfo] = useState({
@@ -13,6 +16,7 @@ const Signup = () => {
   const [errMess, setErrMess] = useState([]);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onChange = (event) => {
     let target = event.target.name;
@@ -23,18 +27,22 @@ const Signup = () => {
   const onSubmit = (event) => {
     event.preventDefault();
     //   console.log(signupInfo);
-    fetch("http://localhost:5000/signup", {
-      method: "POST",
-      body: JSON.stringify(signupInfo),
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setErrMess(data.errors);
-        setErrMessBox(true);
+    try {
+      const res = dispatch(signUpAction(signupInfo));
+      res.then((data) => {
+        // console.log("data:", data);
+        if (typeof data === "object") {
+          // console.log("data:", data);
+          setErrMess(data.errors);
+          setErrMessBox(true);
+        } else {
+          // console.log("no err");
+          navigate("/login");
+        }
       });
-    // navigate("/login");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -83,7 +91,7 @@ const Signup = () => {
         </div>
         <div>
           <button className="btn btn-success" type="submit">
-            Login
+            Signup
           </button>
         </div>
       </form>

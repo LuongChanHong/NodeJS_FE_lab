@@ -30,14 +30,16 @@ const Login = () => {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    // , () => navigate("/products")
     try {
       const res = dispatch(logInAction(loginInfo));
-      if (res) {
-        res.then((data) => {
+      res.then((data) => {
+        // console.log("data:", data);
+        if (typeof data === "object") {
           setErrMess(data);
-        });
-      }
+        } else {
+          navigate("/products");
+        }
+      });
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +53,7 @@ const Login = () => {
         className="product-form"
         action="/products"
       >
-        {errMess && (
+        {errMess.length > 0 && (
           <div className="form-control border-danger">
             {errMess.map((item, i) => (
               <h6 key={i} className="text-danger">
