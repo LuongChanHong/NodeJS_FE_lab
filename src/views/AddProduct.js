@@ -49,9 +49,9 @@ const AddProduct = () => {
     const url = isEditPage != negative ? "/post-edit-product" : "/add-product";
     try {
       const response = post(url, product);
-      // console.log("response:", response);
+      console.log("response:", response);
       response.then((res) => {
-        // console.log("res:", res);
+        console.log("res:", res);
         if (res.data.length > 0) {
           setErrMess(res.data);
         } else {
