@@ -8,7 +8,12 @@ export const get = (url, params) => {
   return axios.get(serverPath + url + params);
 };
 
-export const post = (url, jsonData) => {
-  // console.log("jsonData:", jsonData);
-  return axios.post(serverPath + url, jsonData);
+export const post = (url, data) => {
+  return axios.post(serverPath + url, data);
+};
+
+export const formDataPost = (url, data) => {
+  return axios.post(serverPath + url, data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 };

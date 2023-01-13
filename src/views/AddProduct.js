@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Navigation from "../components/Navigation";
 
-import { post } from "../utils/fetch";
+import { formDataPost } from "../utils/fetch";
 
 const AddProduct = () => {
   const [productID, setProductID] = useSearchParams();
@@ -11,7 +11,7 @@ const AddProduct = () => {
     title: "",
     description: "",
     price: "",
-    imageUrl: "",
+    image: "",
   });
   const [errMess, setErrMess] = useState([]);
   const isEditPage = window.location.href.search("edit");
@@ -39,19 +39,25 @@ const AddProduct = () => {
   }, []);
 
   const onChange = (event) => {
+    let value = event.target.files ? event.target.files[0] : event.target.value;
     let target = event.target.name;
-    let value = event.target.value;
     setProduct({ ...product, [target]: value });
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
+    // console.log("product:", product);
+    const formData = new FormData();
+    for (let attr in product) {
+      formData.append(`${attr}`, product[`${attr}`]);
+    }
+
     const url = isEditPage != negative ? "/post-edit-product" : "/add-product";
     try {
-      const response = post(url, product);
-      console.log("response:", response);
+      const response = formDataPost(url, formData);
+      // console.log("response:", response);
       response.then((res) => {
-        console.log("res:", res);
+        // console.log("res:", res);
         if (res.data.length > 0) {
           setErrMess(res.data);
         } else {
@@ -68,7 +74,8 @@ const AddProduct = () => {
       <Navigation />
       <form
         onSubmit={(event) => onSubmit(event)}
-        className="product-form"
+        className="product-form "
+        // encType="multipart/form-data"
         action="/products"
       >
         {errMess.length > 0 && (
@@ -98,12 +105,12 @@ const AddProduct = () => {
             onChange={(event) => onChange(event)}
           />
         </div>
-        <div className="form-control">
-          <label htmlFor="imageUrl">ImageUrl</label>
+        <div className="">
+          <label htmlFor="image">Image</label>
           <input
-            type="text"
-            name="imageUrl"
-            value={product.imageUrl}
+            type="file"
+            name="image"
+            // value={product.image}
             onChange={(event) => onChange(event)}
           />
         </div>
