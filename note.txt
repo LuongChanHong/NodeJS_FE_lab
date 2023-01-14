@@ -1,6 +1,6 @@
 Nội dung app:
-- lab 19.1 tạo và tải về file pdf order
-"lab 19.1 create, download order pdf file"
+- lab 21.1 xóa các phần không cần thiết
+"lab 21.1 delete unnecessary parts"
 
 
 
