@@ -4,6 +4,12 @@
   box-sizing: border-box;
 }
 
+:root {
+  --primary: #00695c;
+  --light: #439889;
+  --dark: #003d33;
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -18,7 +24,7 @@ main {
 .main-header {
   width: 100%;
   height: 3.5rem;
-  background-color: #00695c;
+  background-color: var(--primary);
   padding: 0 1.5rem;
 }
 
@@ -96,17 +102,37 @@ main {
   margin: 0 0.25rem;
 }
 
-.btn {
+.border--primary {
+  border-radius: 5px;
+  border: 1px solid var(--primary);
+}
+
+.button {
   font: inherit;
-  border: 1px solid #00695c;
-  color: #00695c;
-  background: white;
+  border: none;
+  /* border: 1px solid #00695c; */
+  /* color: #00695c; */
+  color: white;
   border-radius: 3px;
+  padding: 0.3rem 1rem;
   cursor: pointer;
 }
 
-.btn:hover,
-.btn:active {
-  background-color: #00695c;
+.button-primary {
+  background-color: var(--primary);
+}
+.button-dark {
+  background-color: var(--dark);
+}
+
+.button-primary:hover,
+.button-primary:active {
+  background-color: var(--dark);
+  color: white;
+}
+
+.button-dark:hover,
+.button-dark:active {
+  background-color: var(--light);
   color: white;
 }

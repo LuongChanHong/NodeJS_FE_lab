@@ -9,8 +9,8 @@ import { signUpAction } from "../redux/actions/userAction";
 const Signup = () => {
   const [signupInfo, setSignupInfo] = useState({
     email: "",
+    name: "",
     password: "",
-    confirm: "",
   });
   const [openErrMessBox, setErrMessBox] = useState(false);
   const [errMess, setErrMess] = useState([]);
@@ -48,53 +48,56 @@ const Signup = () => {
   return (
     <section>
       <Navigation isAuth={true} />
-      <form
-        onSubmit={(event) => onSubmit(event)}
-        className="product-form"
-        action="/products"
-      >
-        {openErrMessBox && (
-          <div className="form-control border-danger">
-            {errMess.map((item, i) => (
-              <h6 key={i} className="text-danger">
-                {item.msg}
-              </h6>
-            ))}
+      <section className="product-form">
+        <form
+          onSubmit={(event) => onSubmit(event)}
+          className="product-form form-control"
+          action="/products"
+        >
+          {openErrMessBox && (
+            <div className=" border-danger">
+              {errMess.map((item, i) => (
+                <h6 key={i} className="text-danger">
+                  {item.msg}
+                </h6>
+              ))}
+            </div>
+          )}
+          <div className="">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="text"
+              name="email"
+              value={signupInfo.email}
+              onChange={(event) => onChange(event)}
+            />
           </div>
-        )}
-        <div className="form-control">
-          <label htmlFor="email">Email</label>
-          <input
-            type="text"
-            name="email"
-            value={signupInfo.email}
-            onChange={(event) => onChange(event)}
-          />
-        </div>
-        <div className="form-control">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={signupInfo.password}
-            onChange={(event) => onChange(event)}
-          />
-        </div>
-        <div className="form-control">
-          <label htmlFor="confirm">Confirm Password</label>
-          <input
-            type="password"
-            name="confirm"
-            value={signupInfo.confirm}
-            onChange={(event) => onChange(event)}
-          />
-        </div>
-        <div>
-          <button className="btn btn-success" type="submit">
-            Signup
-          </button>
-        </div>
-      </form>
+          <div className="">
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              name="name"
+              value={signupInfo.name}
+              onChange={(event) => onChange(event)}
+            />
+          </div>
+          <div className="">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              name="password"
+              value={signupInfo.password}
+              onChange={(event) => onChange(event)}
+            />
+          </div>
+
+          <div className="d-flex justify-content-end mt-3">
+            <button className="button button-primary" type="submit">
+              Signup
+            </button>
+          </div>
+        </form>
+      </section>
     </section>
   );
 };

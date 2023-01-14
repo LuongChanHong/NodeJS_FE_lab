@@ -1,5 +1,12 @@
+.product-form {
+  margin-top: 3rem !important;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
 .form-control {
   margin: 1rem 0;
+  border-color: var(--primary) !important;
 }
 
 .form-control label,
