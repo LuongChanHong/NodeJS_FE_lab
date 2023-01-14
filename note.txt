@@ -1,6 +1,6 @@
 Nội dung app:
-- lab 21.1 thêm các component chính
-"lab 21.1 add main components"
+- lab 21.1 hiện danh sách post
+"lab 21.1 render post list"
 
 
 

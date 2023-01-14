@@ -39,7 +39,7 @@ const Login = () => {
         if (typeof data === "object") {
           setErrMess(data);
         } else {
-          navigate("/products");
+          navigate("/feed");
         }
       });
     } catch (error) {

@@ -1,12 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Navigation from "../components/Navigation";
 import PostItem from "../components/PostItem";
 import EditPost from "../components/EditPost";
 
+import { get } from "../utils/fetch";
+
 const Feed = () => {
   const [isEditFormOpen, setEditFormOpen] = useState(false);
   const [postAction, setAction] = useState("");
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const getAllPost = () => {
+      const response = get("/get-posts");
+      response.then((res) => {
+        console.log("res:", res);
+        setPosts(res.data);
+      });
+    };
+    getAllPost();
+  }, []);
 
   const handleOpenModal = (action) => {
     setEditFormOpen(!isEditFormOpen);
@@ -27,18 +41,18 @@ const Feed = () => {
             </button>
           </div>
           <section className="feed__postList mt-3 container">
-            <PostItem
-              isOpen={isEditFormOpen}
-              handleOpenModal={handleOpenModal}
-            />
-            <PostItem
-              isOpen={isEditFormOpen}
-              handleOpenModal={handleOpenModal}
-            />
-            <PostItem
-              isOpen={isEditFormOpen}
-              handleOpenModal={handleOpenModal}
-            />
+            {posts.length > 0 ? (
+              posts.map((post, i) => (
+                <PostItem
+                  key={i}
+                  isOpen={isEditFormOpen}
+                  handleOpenModal={handleOpenModal}
+                  detail={post}
+                />
+              ))
+            ) : (
+              <></>
+            )}
           </section>
         </section>
         {isEditFormOpen ? (

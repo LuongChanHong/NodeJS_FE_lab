@@ -34,21 +34,22 @@ const Navigation = (props) => {
           <li className="main-header__item">
             <a href="/signup">Signup</a>
           </li>
-          <li className="main-header__item">
-            <a href="/feed">Feed</a>
-          </li>
-          {!isLogin && (
+          {/* {!isLogin && (
             <li className="main-header__item">
               <a href="/login">Login</a>
             </li>
-          )}
+          )} */}
           {isLogin && (
             <>
               <li className="main-header__item">
                 <a href="/feed">Feed</a>
               </li>
               <li className="main-header__item">
-                <button onClick={onLogout} className="btn" type="button">
+                <button
+                  onClick={onLogout}
+                  className="button button-dark"
+                  type="button"
+                >
                   Logout
                 </button>
               </li>

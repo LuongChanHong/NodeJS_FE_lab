@@ -3,17 +3,20 @@ import Modal from "react-bootstrap/Modal";
 
 import "../css/main.css";
 
+import { formDataPost } from "../utils/fetch";
+
 const EditPost = (props) => {
   const [isModalOpen, setModalOpen] = useState(props.isOpen);
   //   const [isModalOpen, setModalOpen] = useState(props.isOpen);
   const [postContent, setContent] = useState({
     title: "",
     content: "",
+    image: "",
   });
 
   const onChange = (event) => {
     let target = event.target.name;
-    let value = event.target.value;
+    let value = event.target.files ? event.target.files[0] : event.target.value;
     setContent({ ...postContent, [target]: value });
   };
 
@@ -23,6 +26,22 @@ const EditPost = (props) => {
 
   const createPost = (e) => {
     e.preventDefault();
+    const url = props.postAction === "edit" ? "" : "/create-new-post";
+    try {
+      const response = formDataPost(url, postContent);
+      console.log("response:", response);
+      // response.then((res) => {
+      //   // console.log("res:", res);
+      //   if (res.data.length > 0) {
+      //     setErrMess(res.data);
+      //   } else {
+      //     navigate("/products");
+      //   }
+      // });
+      props.handleOpenModal();
+    } catch (error) {
+      console.log("error:", error);
+    }
   };
 
   return (
@@ -49,7 +68,12 @@ const EditPost = (props) => {
             </div>
             <div className="d-flex flex-column mt-2">
               <label htmlFor="image">Image:</label>
-              <input type="file" name="image" />
+              <input
+                type="file"
+                name="image"
+                // value={postContent.image}
+                onChange={(event) => onChange(event)}
+              />
             </div>
             <div className="d-flex flex-column mt-2">
               <label htmlFor="content">Content:</label>
