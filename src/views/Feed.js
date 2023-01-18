@@ -10,21 +10,28 @@ const Feed = () => {
   const [isEditFormOpen, setEditFormOpen] = useState(false);
   const [postAction, setAction] = useState("");
   const [posts, setPosts] = useState([]);
+  const [editPostId, setEditPostId] = useState();
+
+  const getAllPost = () => {
+    // console.log("getAllPost");
+    const response = get("/get-posts");
+    response.then((res) => {
+      // console.log("res:", res);
+      setPosts(res.data);
+    });
+  };
 
   useEffect(() => {
-    const getAllPost = () => {
-      const response = get("/get-posts");
-      response.then((res) => {
-        console.log("res:", res);
-        setPosts(res.data);
-      });
-    };
     getAllPost();
   }, []);
 
-  const handleOpenModal = (action) => {
+  const handleOpenModal = (action, postId) => {
     setEditFormOpen(!isEditFormOpen);
     setAction(action);
+    // getAllPost();
+    if (postId) {
+      setEditPostId(postId);
+    }
   };
 
   return (
@@ -35,7 +42,7 @@ const Feed = () => {
           <div className="feed__addPost--button d-flex justify-content-center mt-3">
             <button
               className="button button-primary"
-              onClick={() => handleOpenModal(!isEditFormOpen, "new")}
+              onClick={() => handleOpenModal("new")}
             >
               New Post
             </button>
@@ -48,6 +55,7 @@ const Feed = () => {
                   isOpen={isEditFormOpen}
                   handleOpenModal={handleOpenModal}
                   detail={post}
+                  getAllPost={getAllPost}
                 />
               ))
             ) : (
@@ -60,6 +68,7 @@ const Feed = () => {
             isOpen={isEditFormOpen}
             postAction={postAction}
             handleOpenModal={handleOpenModal}
+            editPostId={editPostId}
           />
         ) : (
           <></>

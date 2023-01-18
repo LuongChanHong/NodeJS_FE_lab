@@ -1,18 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
+import { useNavigate } from "react-router-dom";
 
 import "../css/main.css";
 
-import { formDataPost } from "../utils/fetch";
+import PostImage from "./PostImage";
+
+import { formDataPost, get } from "../utils/fetch";
 
 const EditPost = (props) => {
   const [isModalOpen, setModalOpen] = useState(props.isOpen);
-  //   const [isModalOpen, setModalOpen] = useState(props.isOpen);
+  const [ErrMess, setErrMess] = useState();
   const [postContent, setContent] = useState({
     title: "",
     content: "",
     image: "",
   });
+
+  useEffect(() => {
+    if (props.postAction === "edit") {
+      const getPost = () => {
+        const response = get(`/get-post/?id=${props.editPostId}`);
+        response.then((res) => {
+          // console.log("res.data:", res.data);
+          setContent(res.data);
+        });
+      };
+      getPost();
+    }
+  }, []);
+
+  const navigate = useNavigate();
 
   const onChange = (event) => {
     let target = event.target.name;
@@ -20,25 +38,24 @@ const EditPost = (props) => {
     setContent({ ...postContent, [target]: value });
   };
 
-  const editPost = (e) => {
-    e.preventDefault();
-  };
-
-  const createPost = (e) => {
-    e.preventDefault();
-    const url = props.postAction === "edit" ? "" : "/create-new-post";
+  const handlePost = (e) => {
+    const url = props.postAction === "edit" ? "/edit-post" : "/create-new-post";
     try {
-      const response = formDataPost(url, postContent);
-      console.log("response:", response);
-      // response.then((res) => {
-      //   // console.log("res:", res);
-      //   if (res.data.length > 0) {
-      //     setErrMess(res.data);
-      //   } else {
-      //     navigate("/products");
-      //   }
-      // });
-      props.handleOpenModal();
+      const formData = new FormData();
+      for (let key in postContent) {
+        formData.append(`${key}`, postContent[`${key}`]);
+      }
+      const response = formDataPost(url, formData);
+      // console.log("response:", response);
+      response.then((res) => {
+        // console.log("res:", res);
+        if (res.data.length > 0) {
+          setErrMess(res.data);
+        } else {
+          console.log("run");
+          props.handleOpenModal();
+        }
+      });
     } catch (error) {
       console.log("error:", error);
     }
@@ -54,7 +71,9 @@ const EditPost = (props) => {
           // keyboard={false}
         >
           <Modal.Header closeButton>
-            <Modal.Title className="">New Post</Modal.Title>
+            <Modal.Title>
+              {props.postAction === "edit" ? "Edit Post" : "New Post"}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="d-flex flex-column mt-2">
@@ -75,6 +94,7 @@ const EditPost = (props) => {
                 onChange={(event) => onChange(event)}
               />
             </div>
+
             <div className="d-flex flex-column mt-2">
               <label htmlFor="content">Content:</label>
               <textarea
@@ -96,14 +116,14 @@ const EditPost = (props) => {
             {props.postAction === "edit" ? (
               <button
                 className="button button-primary"
-                onClick={(e) => editPost(e)}
+                onClick={(e) => handlePost(e)}
               >
                 Edit
               </button>
             ) : (
               <button
                 className="button button-primary"
-                onClick={(e) => createPost(e)}
+                onClick={(e) => handlePost(e)}
               >
                 Create New Post
               </button>

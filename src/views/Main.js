@@ -16,7 +16,7 @@ const Main = () => {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/feed" element={<Feed />} />
-        <Route exact path="/post-detail" element={<PostDetail />} />
+        <Route exact path="/post-detail/:id" element={<PostDetail />} />
 
         <Route path="*" element={<Login />} />
       </Routes>
