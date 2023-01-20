@@ -37,6 +37,8 @@ const Feed = () => {
           }
           return _posts;
         });
+      } else if (data.action === "deletePost") {
+        getAllPost();
       }
     });
   };
