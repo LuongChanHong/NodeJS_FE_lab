@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import openSocket from "socket.io-client";
 
 import Navigation from "../components/Navigation";
 import PostItem from "../components/PostItem";
@@ -12,6 +13,34 @@ const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [editPostId, setEditPostId] = useState();
 
+  const handleSocketIO = () => {
+    console.log("handleSocketIO");
+    const socket = openSocket("http://localhost:5000", {
+      transports: ["websocket"],
+    });
+    socket.on("posts", (data) => {
+      if (data.action === "newPost") {
+        setPosts((prevState) => {
+          const _posts = [...prevState];
+          // _posts.pop();
+          _posts.unshift(data.post);
+          // _posts.splice(1, 1);
+          console.log("_posts:", _posts);
+          return _posts;
+        });
+      } else if (data.action === "updatePost") {
+        setPosts((prevState) => {
+          const _posts = [...prevState];
+          const index = _posts.findIndex((post) => post._id === data.post._id);
+          if (index > -1) {
+            _posts[index] = data.post;
+          }
+          return _posts;
+        });
+      }
+    });
+  };
+
   const getAllPost = () => {
     // console.log("getAllPost");
     const response = get("/get-posts");
@@ -23,12 +52,14 @@ const Feed = () => {
 
   useEffect(() => {
     getAllPost();
+    handleSocketIO();
   }, []);
 
   const handleOpenModal = (action, postId) => {
     setEditFormOpen(!isEditFormOpen);
     setAction(action);
-    // getAllPost();
+    getAllPost();
+
     if (postId) {
       setEditPostId(postId);
     }

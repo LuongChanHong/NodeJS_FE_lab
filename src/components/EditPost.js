@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
-import { useNavigate } from "react-router-dom";
 
 import "../css/main.css";
-
-import PostImage from "./PostImage";
 
 import { formDataPost, get } from "../utils/fetch";
 
@@ -30,8 +27,6 @@ const EditPost = (props) => {
     }
   }, []);
 
-  const navigate = useNavigate();
-
   const onChange = (event) => {
     let target = event.target.name;
     let value = event.target.files ? event.target.files[0] : event.target.value;
@@ -52,7 +47,6 @@ const EditPost = (props) => {
         if (res.data.length > 0) {
           setErrMess(res.data);
         } else {
-          console.log("run");
           props.handleOpenModal();
         }
       });
